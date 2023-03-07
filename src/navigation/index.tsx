@@ -1,10 +1,10 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import LoginScreen from '../screens';
+import HomeScreen from '../screens/HomeScreen';
 
 export type RootStackParamList = {
-  LoginScreen: undefined;
+  HomeScreen: undefined;
 };
 
 const AppStack = createNativeStackNavigator<RootStackParamList>();
@@ -12,7 +12,7 @@ const AppStack = createNativeStackNavigator<RootStackParamList>();
 export default function AppNavigation() {
   return (
     <AppStack.Navigator>
-      <AppStack.Screen name="LoginScreen" component={LoginScreen} />
+      <AppStack.Screen name="HomeScreen" component={HomeScreen} />
     </AppStack.Navigator>
   );
 }
