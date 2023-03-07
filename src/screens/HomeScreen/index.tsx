@@ -1,8 +1,9 @@
 import {FlashList} from '@shopify/flash-list';
-import React, {useEffect, useState} from 'react';
-import {Image, Pressable, Text} from 'react-native';
+import React, {useState} from 'react';
+import {Image, Pressable} from 'react-native';
 
 import axios from '../../utilities/backendService';
+import Loader from '../components/Loader';
 import {
   SearchWrapper,
   Input,
@@ -11,6 +12,7 @@ import {
   Screen,
   ListItemWrapper,
   Avatar,
+  UserName,
 } from './styles';
 
 interface User {
@@ -21,32 +23,37 @@ interface User {
 
 export default function HomeScreen() {
   const [users, setUsers] = useState([]);
-  const [searchFor, setSearchFor] = useState('klaz');
+  const [searchFor, setSearchFor] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const renderItem = ({item}: {item: User}) => (
     <ListItemWrapper>
       <Avatar source={{uri: item.avatar_url}} />
-      <Text style={{fontWeight: 'bold', color: 'black', fontSize: 16}}>
-        {item.login}
-      </Text>
+      <UserName>{item.login}</UserName>
     </ListItemWrapper>
   );
 
-  useEffect(() => {
-    axios
-      .get(`search/users?q=${searchFor}`)
-      .then(res => setUsers(res.data.items));
-  }, []);
+  const searchUsers = async () => {
+    try {
+      setIsLoading(true);
+      const res = await axios.get(`search/users?q=${searchFor}&page=${3}`);
+      setUsers(res.data.items);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Screen>
+      {isLoading && <Loader />}
       <SearchWrapper>
         <Input
           placeholder="Enter username..."
           value={searchFor}
           onChangeText={text => setSearchFor(text)}
         />
-        <Pressable onPress={() => console.log('clebo!')}>
+        <Pressable onPress={searchUsers}>
           <Image source={require('./icons/search.png')} />
         </Pressable>
       </SearchWrapper>
@@ -57,7 +64,7 @@ export default function HomeScreen() {
         estimatedItemSize={100}
         ListEmptyComponent={
           <EmptyWrapper>
-            <EmptyText>No user found</EmptyText>
+            <EmptyText>No user</EmptyText>
           </EmptyWrapper>
         }
         keyExtractor={item => String(item.id)}

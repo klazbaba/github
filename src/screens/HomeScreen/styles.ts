@@ -49,6 +49,12 @@ const Avatar = styled.Image`
   margin-right: 16px;
 `;
 
+const UserName = styled.Text`
+  font-weight: bold;
+  color: black;
+  font-size: 16px;
+`;
+
 export {
   SearchWrapper,
   Input,
@@ -57,4 +63,5 @@ export {
   Screen,
   ListItemWrapper,
   Avatar,
+  UserName,
 };
