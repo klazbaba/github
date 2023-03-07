@@ -1,10 +1,6 @@
 import {StyleSheet} from 'react-native';
 import styled from 'styled-components/native';
 
-const Screen = styled.View`
-  padding: 16px;
-`;
-
 const SearchWrapper = styled.View`
   flex-direction: row;
   align-items: center;
@@ -17,7 +13,48 @@ const SearchWrapper = styled.View`
 
 const Input = styled.TextInput`
   flex: 1;
-  marginright: 8;
+  margin-right: 8px;
 `;
 
-export {Screen, SearchWrapper, Input};
+const EmptyText = styled.Text`
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 80%;
+`;
+
+const EmptyWrapper = styled.View`
+  flex: 1;
+`;
+
+const Screen = styled.View`
+  flex: 1;
+  padding: 16px;
+`;
+
+const ListItemWrapper = styled.View`
+  flex-direction: row;
+  margin-top: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+  border-bottom-width: ${StyleSheet.hairlineWidth}px;
+  padding-bottom: 8px;
+  border-bottom-color: lightgrey;
+`;
+
+const Avatar = styled.Image`
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  margin-right: 16px;
+`;
+
+export {
+  SearchWrapper,
+  Input,
+  EmptyText,
+  EmptyWrapper,
+  Screen,
+  ListItemWrapper,
+  Avatar,
+};
