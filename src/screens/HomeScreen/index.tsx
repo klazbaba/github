@@ -1,27 +1,26 @@
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {FlashList} from '@shopify/flash-list';
 import React, {LegacyRef, useRef, useState} from 'react';
 import {Image, Pressable} from 'react-native';
-import {request} from '../../utilities/backendCall';
 
+import {RootStackParamList} from '../../navigation';
+import {User} from '../../types/User';
+import {request} from '../../utilities/backendCall';
 import Loader from '../components/Loader';
+import Screen from '../components/Screen';
 import {
   SearchWrapper,
   Input,
   EmptyText,
   EmptyWrapper,
-  Screen,
   ListItemWrapper,
   Avatar,
   UserName,
 } from './styles';
 
-interface User {
-  id: number;
-  avatar_url: string;
-  login: string;
-}
+type Props = NativeStackScreenProps<RootStackParamList, 'HomeScreen'>;
 
-export default function HomeScreen() {
+export default function HomeScreen(props: Props) {
   const [users, setUsers] = useState<User[]>([]);
   const [searchFor, setSearchFor] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +29,8 @@ export default function HomeScreen() {
   const list = useRef<FlashList<User>>();
 
   const renderItem = ({item}: {item: User}) => (
-    <ListItemWrapper>
+    <ListItemWrapper
+      onPress={() => props.navigation.navigate('DetailsScreen', item)}>
       <Avatar source={{uri: item.avatar_url}} />
       <UserName>{item.login}</UserName>
     </ListItemWrapper>

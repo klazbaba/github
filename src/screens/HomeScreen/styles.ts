@@ -27,12 +27,7 @@ const EmptyWrapper = styled.View`
   flex: 1;
 `;
 
-const Screen = styled.View`
-  flex: 1;
-  padding: 16px;
-`;
-
-const ListItemWrapper = styled.View`
+const ListItemWrapper = styled.Pressable`
   flex-direction: row;
   margin-top: 8px;
   align-items: center;
@@ -61,7 +56,6 @@ export {
   Input,
   EmptyText,
   EmptyWrapper,
-  Screen,
   ListItemWrapper,
   Avatar,
   UserName,
