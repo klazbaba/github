@@ -1,8 +1,8 @@
 import {FlashList} from '@shopify/flash-list';
 import React, {LegacyRef, useRef, useState} from 'react';
 import {Image, Pressable} from 'react-native';
+import {request} from '../../utilities/backendCall';
 
-import axios from '../../utilities/backendService';
 import Loader from '../components/Loader';
 import {
   SearchWrapper,
@@ -41,12 +41,12 @@ export default function HomeScreen() {
       totalCount.current = 0;
       currentPage.current = 1;
       setIsLoading(true);
-      const res = await axios.get(
+      const res = await request(
         `search/users?q=${searchFor}&sort=updated&order=desc`,
       );
-      setUsers(res.data.items);
+      setUsers(res.items);
       list.current?.scrollToOffset({animated: true, offset: 0});
-      totalCount.current = res.data.total_count;
+      totalCount.current = res.total_count;
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -56,10 +56,10 @@ export default function HomeScreen() {
   const handleEndReached = async () => {
     if (users.length === totalCount.current) return;
     currentPage.current += 1;
-    const res = await axios.get(
-      `search/users?q=${searchFor}&page=${currentPage.current}`,
+    const res = await request(
+      `search/users?q=${searchFor}&page=${currentPage.current}&sort=updated&order=desc`,
     );
-    setUsers([...users, ...res.data.items]);
+    setUsers([...users, ...res.items]);
   };
 
   return (
@@ -85,7 +85,7 @@ export default function HomeScreen() {
             <EmptyText>No user</EmptyText>
           </EmptyWrapper>
         }
-        keyExtractor={item => String(item.id)}
+        keyExtractor={(item, index) => String(item.id) + index}
         onEndReached={handleEndReached}
         onEndReachedThreshold={1}
         ref={list.current as unknown as LegacyRef<FlashList<User>>}

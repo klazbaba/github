@@ -53,6 +53,7 @@ const UserName = styled.Text`
   font-weight: bold;
   color: black;
   font-size: 16px;
+  max-width: 80%;
 `;
 
 export {
