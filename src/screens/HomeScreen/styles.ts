@@ -9,6 +9,7 @@ const SearchWrapper = styled.View`
   padding-horizontal: 8px;
   border-radius: 8px;
   margin-bottom: 16px;
+  padding-vertical: 4px;
 `;
 
 const Input = styled.TextInput`

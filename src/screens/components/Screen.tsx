@@ -6,10 +6,18 @@ interface Props {
 }
 
 export default function Screen(props: Props) {
-  return <Wrapper>{props.children}</Wrapper>;
+  return (
+    <Wrapper>
+      <InnerWrap>{props.children}</InnerWrap>
+    </Wrapper>
+  );
 }
 
-const Wrapper = styled.View`
+const Wrapper = styled.SafeAreaView`
   flex: 1;
+`;
+
+const InnerWrap = styled.View`
   padding: 16px;
+  flex: 1;
 `;

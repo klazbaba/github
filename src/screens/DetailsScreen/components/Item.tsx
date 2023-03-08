@@ -29,6 +29,7 @@ const Label = styled.Text`
 const Value = styled.Text`
   margin-left: 16px;
   font-size: 16px;
-  text-decoration-line: ${props => (props.onPress ? 'underline' : undefined)};
-  color: ${props => (props.onPress ? 'blue' : undefined)};
+  text-decoration-line: ${props => (props.onPress ? 'underline' : 'none')};
+  color: ${props => (props.onPress ? 'blue' : 'grey')};
+  max-width: 90%;
 `;

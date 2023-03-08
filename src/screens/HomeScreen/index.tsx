@@ -24,6 +24,7 @@ export default function HomeScreen(props: Props) {
   const [users, setUsers] = useState<User[]>([]);
   const [searchFor, setSearchFor] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const totalCount = useRef(0);
   const currentPage = useRef(1);
   const list = useRef<FlashList<User>>();
@@ -54,12 +55,22 @@ export default function HomeScreen(props: Props) {
   };
 
   const handleEndReached = async () => {
-    if (users.length === totalCount.current) return;
-    currentPage.current += 1;
-    const res = await request(
-      `search/users?q=${searchFor}&page=${currentPage.current}&sort=updated&order=desc`,
-    );
-    setUsers([...users, ...res.items]);
+    try {
+      if (users.length === totalCount.current) {
+        return;
+      }
+      currentPage.current += 1;
+      const res = await request(
+        `search/users?q=${searchFor}&page=${currentPage.current}&sort=updated&order=desc`,
+      );
+      setUsers([...users, ...res.items]);
+    } catch (error) {}
+  };
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await searchUsers();
+    setIsRefreshing(false);
   };
 
   return (
@@ -89,6 +100,8 @@ export default function HomeScreen(props: Props) {
         onEndReached={handleEndReached}
         onEndReachedThreshold={1}
         ref={list.current as unknown as LegacyRef<FlashList<User>>}
+        onRefresh={handleRefresh}
+        refreshing={isRefreshing}
       />
     </Screen>
   );

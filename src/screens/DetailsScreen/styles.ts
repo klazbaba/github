@@ -1,12 +1,12 @@
 import styled from 'styled-components/native';
 
 const Avatar = styled.Image`
-  width: 150px;
-  height: 150px;
+  width: 160px;
+  height: 160px;
   border-radius: 10px;
   align-self: center;
   border-width: 1px;
-  border-color: grey;
+  border-color: lightgrey;
   margin-vertical: 24px;
 `;
 
